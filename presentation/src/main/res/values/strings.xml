@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="add_to_favorites">Add to favorites</string>
+    <string name="error">An unexpected error occurred</string>
+    <string name="popular">Popular</string>
+    <string name="favorites">Favorites</string>
+    <string name="base_currency">Base currency</string>
+
+    <string-array name="sorting">
+        <item>By name descending</item>
+        <item>By name ascending</item>
+        <item>By value descending</item>
+        <item>By value ascending</item>
+    </string-array>
+</resources>

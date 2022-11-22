@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+        <variable
+            name="data"
+            type="com.pinygod.exchangeratesapp.domain.entity.Rate" />
+
+        <variable
+            name="clickListener"
+            type="com.pinygod.exchangeratesapp.presentation.rates.RatesAdapter.RateClickListener" />
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="4dp">
+
+        <TextView
+            android:id="@+id/tvName"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="16dp"
+            android:text="@{data.name}"
+            app:layout_constraintBottom_toBottomOf="@+id/btnFavorite"
+            app:layout_constraintEnd_toStartOf="@+id/tvValue"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="@+id/btnFavorite"
+            tools:text="USD" />
+
+        <TextView
+            android:id="@+id/tvValue"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="16dp"
+            android:text="@{String.valueOf(data.value)}"
+            app:layout_constraintBottom_toBottomOf="@+id/btnFavorite"
+            app:layout_constraintEnd_toStartOf="@+id/btnFavorite"
+            app:layout_constraintTop_toTopOf="@+id/btnFavorite"
+            tools:text="0.169542" />
+
+        <ImageView
+            android:id="@+id/btnFavorite"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:contentDescription="@string/add_to_favorites"
+            android:onClick="@{v -> clickListener.onIsFavoriteClicked(data.name)}"
+            android:src="@drawable/ic_favorite"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            android:tint="@{data.favorite ? @color/secondary : @color/primary}"
+            tools:ignore="UseAppTint" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>
