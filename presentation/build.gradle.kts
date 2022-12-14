@@ -6,6 +6,8 @@ plugins {
 }
 
 android {
+    namespace = "com.pinygod.exchangeratesapp.presentation"
+
     buildFeatures {
         dataBinding = true
     }

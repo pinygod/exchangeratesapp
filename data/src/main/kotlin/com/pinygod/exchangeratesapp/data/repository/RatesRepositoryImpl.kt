@@ -9,11 +9,9 @@ import com.pinygod.exchangeratesapp.data.local.dbo.toDomain
 import com.pinygod.exchangeratesapp.data.remote.RatesApi
 import com.pinygod.exchangeratesapp.data.remote.dto.toEntity
 import com.pinygod.exchangeratesapp.data.remote.dto.toRates
-import com.pinygod.exchangeratesapp.domain.entity.SortType
 import com.pinygod.exchangeratesapp.domain.entity.Rate
+import com.pinygod.exchangeratesapp.domain.entity.SortType
 import com.pinygod.exchangeratesapp.domain.repository.RatesRepository
-import com.pinygod.exchangeratesapp.domain.utils.DefaultDispatcher
-import com.pinygod.exchangeratesapp.domain.utils.IoDispatcher
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
@@ -23,8 +21,9 @@ import javax.inject.Inject
 class RatesRepositoryImpl @Inject constructor(
     private val ratesApi: RatesApi,
     private val ratesDao: RatesDao,
-    @IoDispatcher private val ioDispatcher: CoroutineDispatcher,
-    @DefaultDispatcher private val defaultDispatcher: CoroutineDispatcher,
+    private val ioDispatcher: CoroutineDispatcher,
+    private val defaultDispatcher: CoroutineDispatcher,
+    private val pagingConfig: PagingConfig
 ) : RatesRepository {
 
     override suspend fun fetchRates(base: String) = withContext(ioDispatcher) {
@@ -69,10 +68,7 @@ class RatesRepositoryImpl @Inject constructor(
         }
 
         return Pager(
-            config = PagingConfig(
-                pageSize = 20,
-                prefetchDistance = 5
-            )
+            config = pagingConfig
         ) {
             ratesDao.getRates(
                 sort = sort,

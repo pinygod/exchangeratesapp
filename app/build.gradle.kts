@@ -6,6 +6,7 @@ plugins {
 }
 
 android {
+    namespace = "com.pinygod.carpooling.android"
     compileSdk = Versions.compileSdk
 
     defaultConfig {
