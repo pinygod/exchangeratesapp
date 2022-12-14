@@ -19,5 +19,6 @@ dependencies {
     implementation(Dependencies.Android.Navigation.fragment)
     implementation(Dependencies.Android.Navigation.ui)
     implementation(Dependencies.Hilt.android)
+    implementation(Dependencies.Paging.android)
     kapt(Dependencies.Hilt.compiler)
 }

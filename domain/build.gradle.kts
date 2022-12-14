@@ -11,4 +11,5 @@ java {
 dependencies {
     implementation(Dependencies.Kotlin.Coroutines.core)
     implementation(Dependencies.Javax.inject)
+    implementation(Dependencies.Paging.common)
 }

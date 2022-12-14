@@ -1,5 +1,9 @@
 package com.pinygod.exchangeratesapp.data.repository
 
+import androidx.paging.Pager
+import androidx.paging.PagingConfig
+import androidx.paging.PagingData
+import androidx.paging.map
 import com.pinygod.exchangeratesapp.data.local.dao.RatesDao
 import com.pinygod.exchangeratesapp.data.local.dbo.toDomain
 import com.pinygod.exchangeratesapp.data.remote.RatesApi
@@ -40,7 +44,7 @@ class RatesRepositoryImpl @Inject constructor(
         ratesDao.insert(rates = rates)
     }
 
-    override fun getRates(sortType: SortType, favoritesOnly: Boolean): Flow<List<Rate>> {
+    override fun getRates(sortType: SortType, favoritesOnly: Boolean): Flow<PagingData<Rate>> {
         val favoritesOnly = if (favoritesOnly) 1 else 0
         val sort: String
         val sortDirection: Int
@@ -64,12 +68,19 @@ class RatesRepositoryImpl @Inject constructor(
             }
         }
 
-        return ratesDao.getRates(
-            sort = sort,
-            sortDirection = sortDirection,
-            favoritesOnly = favoritesOnly
-        ).map { list ->
-            list.map { rate ->
+        return Pager(
+            config = PagingConfig(
+                pageSize = 20,
+                prefetchDistance = 5
+            )
+        ) {
+            ratesDao.getRates(
+                sort = sort,
+                sortDirection = sortDirection,
+                favoritesOnly = favoritesOnly
+            )
+        }.flow.map { pagingData ->
+            pagingData.map { rate ->
                 rate.toDomain()
             }
         }

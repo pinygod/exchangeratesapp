@@ -40,8 +40,8 @@ class RatesFragment : Fragment(), RatesAdapter.RateClickListener {
 
         viewLifecycleOwner.lifecycleScope.launch {
             viewLifecycleOwner.repeatOnLifecycle(Lifecycle.State.STARTED) {
-                viewModel.getRates().collectLatest {
-                    ratesAdapter.submitList(it)
+                viewModel.rates.collectLatest { pagingData ->
+                    ratesAdapter.submitData(pagingData)
                 }
             }
         }

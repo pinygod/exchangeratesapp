@@ -3,6 +3,7 @@ package com.pinygod.exchangeratesapp.presentation.rates
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import androidx.paging.cachedIn
 import com.pinygod.exchangeratesapp.domain.entity.SortType
 import com.pinygod.exchangeratesapp.domain.usecase.ChangeIsFavoriteUseCase
 import com.pinygod.exchangeratesapp.domain.usecase.GetRatesUseCase
@@ -27,7 +28,7 @@ class RatesViewModel @Inject constructor(
     val sort = MutableStateFlow(0)
 
     @OptIn(ExperimentalCoroutinesApi::class)
-    fun getRates() = sort.flatMapLatest {
+    val rates = sort.flatMapLatest {
         val sortType = when (it) {
             0 -> SortType.AlphabetDesc
             1 -> SortType.AlphabetAsc
@@ -36,7 +37,7 @@ class RatesViewModel @Inject constructor(
         }
 
         getRatesUseCase(sortType = sortType, favoriteOnly = isFavorite)
-    }
+    }.cachedIn(viewModelScope)
 
     fun changeIsFavorite(name: String) {
         viewModelScope.launch {

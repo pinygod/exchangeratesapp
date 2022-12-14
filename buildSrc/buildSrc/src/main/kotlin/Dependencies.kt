@@ -32,10 +32,18 @@ object Dependencies {
         }
     }
 
+    object Paging {
+        private const val version = "3.1.1"
+
+        const val android = "androidx.paging:paging-runtime-ktx:$version"
+        const val common = "androidx.paging:paging-common-ktx:$version"
+    }
+
     object Room {
         private const val version = "2.4.3"
 
         const val room = "androidx.room:room-ktx:$version"
+        const val paging = "androidx.room:room-paging:$version"
         const val compiler = "androidx.room:room-compiler:$version"
     }
 

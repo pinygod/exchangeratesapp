@@ -1,5 +1,7 @@
 package com.pinygod.exchangeratesapp.data.local.dao
 
+import androidx.paging.PagingData
+import androidx.paging.PagingSource
 import androidx.room.Dao
 import androidx.room.Insert
 import androidx.room.OnConflictStrategy
@@ -23,7 +25,7 @@ interface RatesDao {
         sort: String,
         sortDirection: Int,
         favoritesOnly: Int = 0
-    ): Flow<List<RateDbo>>
+    ): PagingSource<Int, RateDbo>
 
     @Query("SELECT name FROM rate WHERE isFavorite")
     suspend fun getFavoriteRatesNames(): List<String>
